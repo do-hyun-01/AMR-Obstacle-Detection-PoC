@@ -5,7 +5,8 @@
 ## 📅 프로젝트 일정
 - **수행 기간**: 2026.01.15 ~ 2026.01.26 (PoC 완료 예정)
 
-## 💻 개발 환경
+## 💻 기술 스택 및 개발 환경
+- **Tech Stack**: Python, PyTorch, YOLOv8, OpenCV
 - **Server**: Naver Cloud Platform (Tesla T4 GPU 1EA, 16GB VRAM)
 - **OS**: Windows Server 2019
 - **Framework**: PyTorch, Ultralytics (YOLOv8)
