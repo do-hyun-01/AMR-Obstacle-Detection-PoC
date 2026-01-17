@@ -1,0 +1,6 @@
+# YOLOv8 데이터 설정 파일
+train: C:/AMR_Dataset_Final/train/images
+val: C:/AMR_Dataset_Final/val/images
+
+nc: 4  # 클래스 개수
+names: ['Person', 'Forklift', 'Pallet_Rack', 'Box'] # 클래스 이름 (순서 중요)
