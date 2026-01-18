@@ -4,7 +4,7 @@ import shutil
 from tqdm import tqdm
 
 # === 설정 ===
-base_path = r"C:\AMR_Dataset_Final"
+base_path = r"C:\Users\Administrator\Desktop\AMR_Project\AMR_Dataset_Final"
 train_ratio = 0.8
 
 # 폴더 구조 생성
@@ -13,7 +13,7 @@ for split in ['train', 'val']:
         os.makedirs(os.path.join(base_path, split, sub), exist_ok=True)
 
 # 파일 목록 확보
-image_files = [f for f in os.listdir(os.path.join(base_path, "images")) if f.endswith('.jpg')]
+image_files = [f for f in os.listdir(os.path.join(base_path, "images")) if f.endswith('.JPG')]
 random.shuffle(image_files)
 
 split_idx = int(len(image_files) * train_ratio)
@@ -27,7 +27,7 @@ def move_files(files, split_name):
         shutil.move(os.path.join(base_path, "images", f), 
                     os.path.join(base_path, split_name, "images", f))
         # 라벨 이동
-        label_f = f.replace('.jpg', '.txt')
+        label_f = f.replace('.JPG', '.txt')
         label_src = os.path.join(base_path, "labels", label_f)
         if os.path.exists(label_src):
             shutil.move(label_src, os.path.join(base_path, split_name, "labels", label_f))
