@@ -10,3 +10,6 @@ runs/
 # 파이썬 캐시 파일
 __pycache__/
 .ipynb_checkpoints/
+
+datasets/
+*.cache
