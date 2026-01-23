@@ -1,7 +1,6 @@
-# YOLOv8 데이터 설정 파일 (서버 환경 맞춤형)
-path: C:/Users/Administrator/Desktop/AMR_Project/AMR_Dataset_Final
+path: D:/datasets/v5_final  # 리사이징된 데이터셋의 절대 경로
 train: train/images
 val: val/images
 
 nc: 4
-names: ['Person', 'Forklift', 'Pallet_Rack', 'Box']
+names: ['moving_object', 'fixed_object', 'person', 'door']

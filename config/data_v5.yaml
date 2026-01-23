@@ -1,7 +1,0 @@
-path: C:/Users/Administrator/Desktop/AMR_Project/datasets/v5_dataset
-train: images/train
-val: images/val
-
-# 클래스 정보는 다운로드 완료 후 확인하여 수정
-nc: 4 
-names: ['Person', 'Forklift', 'Pallet_Rack', 'Box']
