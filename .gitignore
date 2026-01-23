@@ -1,15 +1,22 @@
-# 데이터셋 폴더 제외
-AMR_Dataset_Final/
-
-# 모델 가중치 파일 제외
-*.pt
-
-# 학습 결과 폴더 제외
-runs/
-
-# 파이썬 캐시 파일
+# --- Python & OS ---
 __pycache__/
-.ipynb_checkpoints/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+Thumbs.db
 
+# --- Datasets ---
 datasets/
 *.cache
+
+# results 폴더 내부에 중복 생성된 weights 폴더 제외
+results/**/weights/
+
+# --- YOLO Training Artifacts (Bulky Images) ---
+results/**/train_batch*.jpg
+results/**/val_batch*.jpg
+
+# --- 기타 ---
+.vscode/
+.idea/
