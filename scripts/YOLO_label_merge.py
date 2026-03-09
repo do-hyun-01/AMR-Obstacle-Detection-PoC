@@ -5,22 +5,25 @@ import glob
 MOVING_ID = 0
 FIXED_ID = 1
 
+# 좌표 변환 함수(중심 좌표 형식을 [x1, y1, x2, y2] 형식으로 변환)
+# 중심점에서 가로/세로 절반을 가감하여 좌상단/우하단 계산
 def yolo_to_xyxy(box):
-    """중심 좌표 형식을 [x1, y1, x2, y2] 형식으로 변환"""
     cls, x, y, w, h = box
     x1, y1 = x - w/2, y - h/2
     x2, y2 = x + w/2, y + h/2
     return [cls, x1, y1, x2, y2]
 
+# 좌표 변환 함수([x1, y1, x2, y2] 형식을 다시 YOLO 형식으로 변환)
+# 우하단 - 좌하단 으로 가로/세로 길이 계산
+# 좌상단 길이의 절반을 더하여 중심점 계산
 def xyxy_to_yolo(box):
-    """[x1, y1, x2, y2] 형식을 다시 YOLO 형식으로 변환"""
     cls, x1, y1, x2, y2 = box
     w, h = x2 - x1, y2 - y1
     x, y = x1 + w/2, y1 + h/2
     return [cls, x, y, w, h]
 
+# 중첩 확인 함수 (AABB 충돌 알고리즘)
 def is_overlapping(box_a, box_b):
-    """두 박스가 겹치는지 확인 (xyxy 형식)"""
     _, a_x1, a_y1, a_x2, a_y2 = box_a
     _, b_x1, b_y1, b_x2, b_y2 = box_b
     return not (a_x2 < b_x1 or a_x1 > b_x2 or a_y2 < b_y1 or a_y1 > b_y2)
@@ -71,7 +74,7 @@ def merge_labels(input_path, output_path):
             for b in all_final:
                 f.write(f"{int(b[0])} {b[1]:.6f} {b[2]:.6f} {b[3]:.6f} {b[4]:.6f}\n")
 
-    print(f" 병합 완료: {len(files)}개 파일 처리되었습니다.")
+    print(f" 병합 완료: {len(files)}개 파일 처리")
 
 # 실행
 input_labels = r"D:\datasets\v5_final\train\labels"
