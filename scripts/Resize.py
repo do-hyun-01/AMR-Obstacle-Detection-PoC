@@ -1,17 +1,17 @@
 import cv2
 import os
 import shutil
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor # 병렬처리 (멀티프로세싱)
 from tqdm import tqdm
 
 SRC_ROOT = r"D:\datasets\v5_original"
 DST_ROOT = r"D:\datasets\v5_final"
-TARGET_SIZE = 640
+TARGET_SIZE = 640 #(yolo 표준)
 
 def process_file(file_info):
     src_path, dst_path, is_image = file_info
     
-    # 목적지 디렉토리가 없으면 생성
+    # 저장할 디렉토리가 없으면 생성
     os.makedirs(os.path.dirname(dst_path), exist_ok=True)
     
     if is_image:
@@ -21,12 +21,13 @@ def process_file(file_info):
             
             # 비율 유지 리사이징 로직
             h, w = img.shape[:2]
-            if h > w:
+            if h > w: # 세로가 더 길면
                 new_h, new_w = TARGET_SIZE, int(TARGET_SIZE * w / h)
-            else:
+            else: # 가로가 더 길거나 같으면
                 new_h, new_w = int(TARGET_SIZE * h / w), TARGET_SIZE
                 
-            resized = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
+            resized = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA) # 이미지 축소 시 품질 유지를 위한 INTER_AREA 보간법 사용
+
             cv2.imwrite(dst_path, resized, [cv2.IMWRITE_JPEG_QUALITY, 90])
         except Exception as e:
             print(f"Error processing {src_path}: {e}")
@@ -36,11 +37,12 @@ def process_file(file_info):
 
 if __name__ == "__main__":
     tasks = []
-    print(" 파일 목록 스캔 중...")
+    print(" 파일 목록 스캔 중")
     for root, dirs, files in os.walk(SRC_ROOT):
         for f in files:
             src_p = os.path.join(root, f)
-            # 원본 구조를 유지하며 목적지 경로 생성
+
+            # 원본 루트로부터의 상대 경로 계산
             rel_p = os.path.relpath(src_p, SRC_ROOT)
             dst_p = os.path.join(DST_ROOT, rel_p)
             
@@ -52,4 +54,4 @@ if __name__ == "__main__":
     with ProcessPoolExecutor(max_workers=16) as executor:
         list(tqdm(executor.map(process_file, tasks), total=len(tasks)))
 
-    print(f"\n 완료! 새 데이터셋 경로: {DST_ROOT}")
+    print(f"\n 완료 새 데이터셋 경로: {DST_ROOT}")
